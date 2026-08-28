@@ -36,6 +36,9 @@ const description =
   "SolarWake reactivates your dormant solar leads over WhatsApp and books appointments automatically — no new ad spend.";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    onboarded: search["onboarded"] === true || search["onboarded"] === "true",
+  }),
   head: () => ({
     meta: [
       { title },
@@ -48,6 +51,7 @@ export const Route = createFileRoute("/")({
   }),
   component: SolarWake,
 });
+
 
 type ChatMessage = { role: "agent" | "customer"; text: string; time: string };
 
