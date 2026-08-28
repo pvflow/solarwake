@@ -1,9 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowRight,
   BellRing,
   CalendarCheck,
+  CheckCircle2,
+
   Clock,
   MessageSquare,
   Phone,
@@ -36,6 +38,12 @@ const description =
   "SolarWake reactivates your dormant solar leads over WhatsApp and books appointments automatically — no new ad spend.";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): { onboarded?: boolean } =>
+    search["onboarded"] === true || search["onboarded"] === "true"
+      ? { onboarded: true }
+      : {},
+
+
   head: () => ({
     meta: [
       { title },
@@ -48,6 +56,7 @@ export const Route = createFileRoute("/")({
   }),
   component: SolarWake,
 });
+
 
 type ChatMessage = { role: "agent" | "customer"; text: string; time: string };
 
@@ -160,6 +169,20 @@ const STEPS = [
 
 function SolarWake() {
   const callAgent = useServerFn(reactivationReply);
+  const { onboarded } = Route.useSearch();
+  const [onboardingName, setOnboardingName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!onboarded) return;
+    try {
+      const raw = sessionStorage.getItem("solarwake_onboarding");
+      if (raw) setOnboardingName((JSON.parse(raw) as { company?: string }).company ?? null);
+    } catch {
+      /* ignore */
+    }
+  }, [onboarded]);
+
+
 
   const [leads, setLeads] = useState<Lead[]>(CONTACTS);
   const [companyId] = useState("SW-001");
@@ -284,9 +307,18 @@ function SolarWake() {
               Live demo
             </a>
           </nav>
-          <a href="#demo" className={CTA_CLASS}>
-            See it live
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="#demo"
+              className="hidden text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            >
+              See it live
+            </a>
+            <Link to="/signup" className={CTA_CLASS}>
+              Sign up <ArrowRight className="size-4" />
+            </Link>
+          </div>
+
         </div>
       </header>
 
@@ -312,13 +344,14 @@ function SolarWake() {
               without a single euro of extra ad spend.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <a href="#demo" className={CTA_CLASS}>
-                Watch the live demo <ArrowRight className="size-4" />
-              </a>
-              <a href="#solutions" className={GHOST_CLASS}>
-                How it works
+              <Link to="/signup" className={CTA_CLASS}>
+                Sign up — 3 min setup <ArrowRight className="size-4" />
+              </Link>
+              <a href="#demo" className={GHOST_CLASS}>
+                Watch the live demo
               </a>
             </div>
+
             <p className="mt-6 text-sm text-muted-foreground">
               Works with your CRM · Live in under a week · Powered by Lovable AI
             </p>
@@ -440,6 +473,20 @@ function SolarWake() {
         {/* Live demo — CRM + WhatsApp */}
         <section id="demo" className="py-20">
           <div className="container mx-auto max-w-6xl px-8">
+            {onboarded && (
+              <div className="mx-auto mb-10 flex max-w-2xl items-start gap-3 rounded-xl border border-border bg-success-soft/60 p-5 shadow-sm">
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" />
+                <div className="text-sm">
+                  <p className="font-semibold text-foreground">
+                    {onboardingName ?? company.name} is connected
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
+                    CRM and WhatsApp keys verified. Your dormant leads were imported
+                    automatically — pick one below and watch the assistant work.
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-semibold">See it work on a real pipeline</h2>
               <p className="mt-4 text-muted-foreground">
@@ -447,6 +494,7 @@ function SolarWake() {
                 The agent runs live.
               </p>
             </div>
+
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
               <button
@@ -727,14 +775,18 @@ function SolarWake() {
               Turn last quarter's quotes into next week's appointments
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              We'll reactivate your dormant pipeline on a pilot list before you commit to
-              anything.
+              Sign up, paste your CRM and WhatsApp API keys, and the assistant starts
+              working your dormant pipeline. Setup takes about three minutes.
             </p>
-            <div className="mt-9">
-              <a href="#demo" className={CTA_CLASS}>
-                Book a walkthrough <ArrowRight className="size-4" />
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+              <Link to="/signup" className={CTA_CLASS}>
+                Sign up & connect your CRM <ArrowRight className="size-4" />
+              </Link>
+              <a href="#demo" className={GHOST_CLASS}>
+                Book a walkthrough
               </a>
             </div>
+
           </div>
         </section>
       </main>
