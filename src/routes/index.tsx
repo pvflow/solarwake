@@ -103,15 +103,6 @@ function SolarWake() {
     setInput("");
   }
 
-  function pickCompany(id: string) {
-    setCompanyId(id);
-    const first = leads
-      .filter((l) => l.co === id)
-      .sort((a) => (a.status === "Cold" ? -1 : 1))[0];
-    setLeads(CONTACTS);
-    pickLead(first ? first.id : "");
-  }
-
   function start() {
     if (started || !lead) return;
     setStarted(true);
@@ -210,22 +201,9 @@ function SolarWake() {
           {/* LEFT — CRM */}
           <section className="rounded-[18px] border border-line bg-panel p-[18px]">
             <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2.5">
-              <div className="flex items-center gap-2.5">
-                <span className="text-xs font-bold uppercase tracking-widest text-sub">
-                  Solar company
-                </span>
-                <select
-                  value={companyId}
-                  onChange={(e) => pickCompany(e.target.value)}
-                  className="rounded-[9px] border border-line bg-panel-2 px-2.5 py-[7px] text-[13px] font-semibold text-foreground outline-none"
-                >
-                  {COMPANIES.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name} — {c.city}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-sub">
+                {company.name} · {company.city}
+              </span>
               <span className="inline-flex items-center gap-1.5 text-[11.5px] text-success-soft">
                 <span className="size-[7px] rounded-full bg-success shadow-glow-green" />
                 CRM {company.api}
@@ -463,7 +441,10 @@ function SolarWake() {
             appointments.
           </p>
           <button
-            onClick={() => pickCompany(companyId)}
+            onClick={() => {
+              setLeads(CONTACTS);
+              pickLead(leadId);
+            }}
             className="inline-flex items-center gap-[7px] rounded-full border border-line bg-panel px-3.5 py-2 text-[13px] font-semibold text-sub"
           >
             <RotateCcw size={14} /> Reset demo
