@@ -36,7 +36,7 @@ export const reactivationReply = createServerFn({ method: "POST" })
 
     const gateway = createLovableAiGatewayProvider(apiKey);
 
-    const result = generateText({
+    const { output } = await generateText({
       model: gateway("google/gemini-3.7-flash"),
       system: buildSystem(lead, company),
       messages: data.history.map((m) => ({
@@ -46,7 +46,6 @@ export const reactivationReply = createServerFn({ method: "POST" })
       output: Output.object({ schema: ReplySchema }),
     });
 
-    const output = await (await result).output;
     return {
       message: output.message || "…",
       status: output.status,
