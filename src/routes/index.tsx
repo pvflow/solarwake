@@ -774,14 +774,18 @@ function SolarWake() {
               Turn last quarter's quotes into next week's appointments
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              We'll reactivate your dormant pipeline on a pilot list before you commit to
-              anything.
+              Sign up, paste your CRM and WhatsApp API keys, and the assistant starts
+              working your dormant pipeline. Setup takes about three minutes.
             </p>
-            <div className="mt-9">
-              <a href="#demo" className={CTA_CLASS}>
-                Book a walkthrough <ArrowRight className="size-4" />
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+              <Link to="/signup" className={CTA_CLASS}>
+                Sign up & connect your CRM <ArrowRight className="size-4" />
+              </Link>
+              <a href="#demo" className={GHOST_CLASS}>
+                Book a walkthrough
               </a>
             </div>
+
           </div>
         </section>
       </main>
