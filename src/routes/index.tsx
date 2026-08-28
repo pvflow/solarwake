@@ -167,6 +167,20 @@ const STEPS = [
 
 function SolarWake() {
   const callAgent = useServerFn(reactivationReply);
+  const { onboarded } = Route.useSearch();
+  const [onboardingName, setOnboardingName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!onboarded) return;
+    try {
+      const raw = sessionStorage.getItem("solarwake_onboarding");
+      if (raw) setOnboardingName((JSON.parse(raw) as { company?: string }).company ?? null);
+    } catch {
+      /* ignore */
+    }
+  }, [onboarded]);
+
+
 
   const [leads, setLeads] = useState<Lead[]>(CONTACTS);
   const [companyId] = useState("SW-001");
