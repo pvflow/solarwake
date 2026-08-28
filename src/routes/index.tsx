@@ -456,6 +456,20 @@ function SolarWake() {
         {/* Live demo — CRM + WhatsApp */}
         <section id="demo" className="py-20">
           <div className="container mx-auto max-w-6xl px-8">
+            {onboarded && (
+              <div className="mx-auto mb-10 flex max-w-2xl items-start gap-3 rounded-xl border border-border bg-success-soft/60 p-5 shadow-sm">
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" />
+                <div className="text-sm">
+                  <p className="font-semibold text-foreground">
+                    {onboardingName ?? company.name} is connected
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
+                    CRM and WhatsApp keys verified. Your dormant leads were imported
+                    automatically — pick one below and watch the assistant work.
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-semibold">See it work on a real pipeline</h2>
               <p className="mt-4 text-muted-foreground">
@@ -463,6 +477,7 @@ function SolarWake() {
                 The agent runs live.
               </p>
             </div>
+
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
               <button
