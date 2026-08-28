@@ -291,9 +291,18 @@ function SolarWake() {
               Live demo
             </a>
           </nav>
-          <a href="#demo" className={CTA_CLASS}>
-            See it live
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="#demo"
+              className="hidden text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            >
+              See it live
+            </a>
+            <Link to="/signup" className={CTA_CLASS}>
+              Sign up <ArrowRight className="size-4" />
+            </Link>
+          </div>
+
         </div>
       </header>
 
