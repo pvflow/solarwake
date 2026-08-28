@@ -103,15 +103,6 @@ function SolarWake() {
     setInput("");
   }
 
-  function pickCompany(id: string) {
-    setCompanyId(id);
-    const first = leads
-      .filter((l) => l.co === id)
-      .sort((a) => (a.status === "Cold" ? -1 : 1))[0];
-    setLeads(CONTACTS);
-    pickLead(first ? first.id : "");
-  }
-
   function start() {
     if (started || !lead) return;
     setStarted(true);
