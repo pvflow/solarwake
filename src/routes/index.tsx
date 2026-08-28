@@ -344,9 +344,13 @@ function SolarWake() {
               without a single euro of extra ad spend.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <a href="#demo" className={CTA_CLASS}>
-                Watch the live demo <ArrowRight className="size-4" />
+              <Link to="/signup" className={CTA_CLASS}>
+                Sign up — 3 min setup <ArrowRight className="size-4" />
+              </Link>
+              <a href="#demo" className={GHOST_CLASS}>
+                Watch the live demo
               </a>
+
               <a href="#solutions" className={GHOST_CLASS}>
                 How it works
               </a>
