@@ -441,7 +441,10 @@ function SolarWake() {
             appointments.
           </p>
           <button
-            onClick={() => pickCompany(companyId)}
+            onClick={() => {
+              setLeads(CONTACTS);
+              pickLead(leadId);
+            }}
             className="inline-flex items-center gap-[7px] rounded-full border border-line bg-panel px-3.5 py-2 text-[13px] font-semibold text-sub"
           >
             <RotateCcw size={14} /> Reset demo
