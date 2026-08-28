@@ -130,7 +130,7 @@ function SolarWake() {
     setMessages(history);
     setTyping(true);
     const turn = history.filter((m) => m.role === "customer").length;
-    const scripted = SCRIPT[Math.min(turn - 1, SCRIPT.length - 1)];
+    const scripted = SCRIPT[Math.min(turn - 1, SCRIPT.length - 1)] ?? SCRIPT[SCRIPT.length - 1]!;
 
     let reply: AgentReply;
     try {
