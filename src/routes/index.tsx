@@ -350,11 +350,8 @@ function SolarWake() {
               <a href="#demo" className={GHOST_CLASS}>
                 Watch the live demo
               </a>
-
-              <a href="#solutions" className={GHOST_CLASS}>
-                How it works
-              </a>
             </div>
+
             <p className="mt-6 text-sm text-muted-foreground">
               Works with your CRM · Live in under a week · Powered by Lovable AI
             </p>
